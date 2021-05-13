@@ -9,7 +9,7 @@ rm -f /lib/systemd/system/sockets.target.wants/*udev*; \
 rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
 rm -f /lib/systemd/system/basic.target.wants/*;\
 rm -f /lib/systemd/system/anaconda.target.wants/*;
-RUN yum -y install httpd; yum clean all; systemctl enable httpd.service
+RUN yum -y install httpd; systemctl enable httpd.service
 
 # Install the epel and remi repositories
 RUN yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
@@ -26,8 +26,21 @@ RUN yum -y install mariadb-server
 # Install the openssl and ssl modules
 RUN yum -y install openssl mod_ssl
 
+# Install crontab and sudo
+RUN yum -y install crontabs sudo
+
+# Clear yum cache
+RUN yum clean all;
+RUN rm -rf /var/cache/yum
+
 # Enable the database at startup
 RUN systemctl enable mariadb.service
+
+
+# Add permision to cron to user apache
+
+RUN echo "apache  ALL = (ALL) NOPASSWD: /usr/bin/crontab, /usr/bin/zip, /bin/chmod, /bin/chown, /usr/bin/whoami" >> /etc/sudoers
+RUN echo "Defaults:apache !requiretty" >> /etc/sudoers
 
 # ToDo: Set the root password for mysql prior to build...
 # RUN mysqladmin -u root password rconfig
