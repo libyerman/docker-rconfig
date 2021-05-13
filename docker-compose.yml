@@ -1,6 +1,6 @@
 rconfig:
   container_name: rconfig
-  image: wtghcivica/rconfig:3.9.6
+  image: libyerman/rconfig:3.9.6
   #image: local/rconfig
   privileged: true
   restart: always
