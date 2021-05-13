@@ -28,6 +28,7 @@ RUN yum -y install openssl mod_ssl
 
 # Install crontab and sudo
 RUN yum -y install crontabs sudo
+RUN systemctl enable crond
 
 # Clear yum cache
 RUN yum clean all;

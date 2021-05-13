@@ -12,7 +12,7 @@ To run the container, first clone this repository, navigate to the 'docker-rconf
 folder, and create the local image:
 
 ```
-docker build -rm -t local/rconfig .
+docker build -t local/rconfig .
 ```
 
 Once completed, you can run the local images:
